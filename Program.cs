@@ -92,6 +92,55 @@ namespace LinqPractice
                 Console.WriteLine($"{item.Name} : {item.Point}");
             }
             Console.WriteLine();
+
+            //THEN & THENBYDESCENDING
+            Console.WriteLine("成績由低到高，座號由高到低");
+            var sortByMulti = students.OrderBy(stu => stu.Point).ThenByDescending(stu => stu.ID);
+            foreach (var item in sortByMulti)
+            {
+                Console.WriteLine($"{item.ID} : {item.Name} : {item.Point}");
+            }
+            Console.WriteLine();
+
+
+            //PARTITIONING OPERATOR
+            //TAKE
+            Console.WriteLine("Take 3");
+            var takeOp = students.Take(3);
+            foreach (var item in takeOp)
+            {
+                Console.WriteLine($"{item.ID} : {item.Name}");
+            }
+            Console.WriteLine();
+
+            //TAKEWHILE
+            Console.WriteLine("Take while ID < 103");
+            var takeWhileOp = students.TakeWhile(stu => stu.ID < 103);
+            foreach (var item in takeWhileOp)
+            {
+                Console.WriteLine($"{item.ID} : {item.Name}");
+            }
+            Console.WriteLine();
+
+            //SKIP
+            Console.WriteLine("Skip 2 ");
+            var skipOp = students.Skip(2);
+            foreach (var item in skipOp)
+            {
+                Console.WriteLine($"{item.ID} : {item.Name}");
+            }
+            Console.WriteLine();
+
+            //SKIPWHILE
+            Console.WriteLine("Skip while ID < 104");
+            var skipWhileOp = students.SkipWhile(stu => stu.ID < 104);
+            foreach (var item in skipWhileOp)
+            {
+                Console.WriteLine($"{item.ID} : {item.Name}");
+            }
+            Console.WriteLine();
+
+
         }
     }
 }

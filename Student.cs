@@ -45,6 +45,14 @@ namespace LinqPractice
                     ID = 104,
                     Point = 65,
                     Ability = new string[] { "Dreaming", "Drawing", "Writing" }
+                },
+
+                new Student()
+                {
+                    Name = "Carl",
+                    ID = 105,
+                    Point = 14,
+                    Ability = new string[] { "JAVA", "Writing", "Boxing"}
                 }
             };
 
