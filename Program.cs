@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,7 +31,7 @@ namespace LinqPractice
 
             //SUM
             double sum = students.Sum(stu => stu.Point);
-            Console.WriteLine($"全班總分 :  {sum}");
+            Console.WriteLine($"全班總分 : {sum}");
             Console.WriteLine();
 
             //AVERAGE
@@ -141,6 +142,55 @@ namespace LinqPractice
             Console.WriteLine();
 
 
+            //CONVERSION OPRATORS
+            //ToList
+            var toList = students.ToList();
+
+            //ToArray
+            var toArr = students.ToArray();
+
+            //ToDictionary
+            Console.WriteLine("To Dictionary");
+            var toDic = students.ToDictionary(k => k.ID, v => v.Name); /* 前項為key，後項為value。後項可省略，若省略則value為student */
+            foreach (var item in toDic)
+            {
+                Console.WriteLine($"{item.Key} - {item.Value}");
+            }
+            Console.WriteLine();
+
+            //ToLookup
+            Console.WriteLine("To Lookup");
+            var abi = students.SelectMany(stu => stu.Ability, (students, ability) => new { Name = students.Name, Ability = ability });
+            var toLookup = abi.ToLookup(k => k.Ability); /* 與dictionary類似，但lookup的key值可以重複，dictionary不行 */
+            foreach (var item in toLookup)
+            {
+                Console.WriteLine(item.Key);
+                foreach (var value in toLookup[item.Key])
+                {
+                    Console.WriteLine($"\t{value.Name}");
+                }
+            }
+            Console.WriteLine();
+
+            //Cast : 若cast型別不合的物件，會在該物件被執行時出現exception
+            ArrayList list = new ArrayList();
+            list.Add(1);
+            list.Add("two");
+            list.Add(3);
+            list.Add("four");
+            IEnumerable<int> castInts = list.Cast<int>();
+            
+            //foreach (int? item in castInts)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //OfType : 在映射時會直接跳過型別不合的物件，故執行時不會出現exception 
+            IEnumerable<int> oftypeInts = list.OfType<int>();
+            foreach (var item in oftypeInts)
+            {
+                Console.WriteLine(item);
+            }            
         }
     }
 }
