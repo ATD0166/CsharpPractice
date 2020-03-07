@@ -190,7 +190,45 @@ namespace LinqPractice
             foreach (var item in oftypeInts)
             {
                 Console.WriteLine(item);
-            }            
+            }
+            Console.WriteLine();
+
+
+            //GROUPING OPERATOR
+            //Groupby 單一群組條件
+            var employees = Employee.GetEmployees().GroupBy(em => em.Department).OrderBy(x => x.Key);
+            foreach (var dept in employees)
+            {
+                Console.WriteLine(
+                    $"{dept.Key} Department " +
+                    $"{dept.Count(x => x.Gender == "Male")} Males " +
+                    $"& {dept.Count(x => x.Gender == "Female")} Females");
+                Console.WriteLine("-----------------------------------");
+                dept.OrderBy(x => x.Salary);
+                foreach (var emp in dept)
+                {
+                    Console.WriteLine($"{emp.Name} : {emp.Salary}");
+                }
+                Console.WriteLine();
+            }
+
+            //Groupby 多重群組條件
+            var employees_2 = Employee.GetEmployees()
+                .GroupBy(con => new {con.Department, con.Gender})
+                .OrderBy(x => x.Key.Department)
+                .ThenBy(x => x.Key.Gender)
+                .Select(x => new { Department = x.Key.Department, Gender = x.Key.Gender, Employees = x.OrderBy(y => y.Salary) });
+            foreach (var grp in employees_2)
+            {
+                Console.WriteLine($"{grp.Department} Department {grp.Gender} team People:{employees_2.Count()}");
+                Console.WriteLine("-----------------------------------");                
+                foreach (var emp in grp.Employees)
+                {
+                    Console.WriteLine($"{emp.Name} : {emp.Salary}");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
         }
     }
 }
